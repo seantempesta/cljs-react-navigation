@@ -1,4 +1,4 @@
-(defproject cljs-react-navigation "0.1.0"
+(defproject cljs-react-navigation "0.1.1"
   :description "CLJS Wrappers for react-navigation"
   :url "https://github.com/seantempesta/cljs-react-navigation"
   :license {:name "MIT"
