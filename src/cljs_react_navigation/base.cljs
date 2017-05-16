@@ -1,10 +1,8 @@
 (ns cljs-react-navigation.base
   (:require [reagent.core :as r]
             [reagent.impl.component :as ric]
-            [cljs.spec :as s :include-macros true]
-            [cljs.spec.test :as stest :include-macros true]
-            [cljs.spec.impl.gen :as gen]))
-           
+            [cljs.spec.alpha :as s :include-macros true]))
+
 (defonce React (js/require "react"))
 (defonce ReactNavigation (js/require "react-navigation"))
 (defonce isValidElement (aget React "isValidElement"))
@@ -42,12 +40,12 @@
 (defn react-component? [c]
   (cond
     (ric/react-class? c) c
-    :else :cljs.spec/invalid))
+    :else :cljs.spec.alpha/invalid))
 
 (defn react-element? [e]
   (cond
     (ric/react-class? e) (r/create-element e)
-    :else :cljs.spec/invalid))
+    :else :cljs.spec.alpha/invalid))
 
 (defn string-or-react-component? [s-or-c]
   (cond
@@ -57,7 +55,7 @@
                    (let [clj-props (js->clj props :keywordize-keys true)
                          react-c (s-or-c clj-props children)]
                      react-c))
-    :else :cljs.spec/invalid))
+    :else :cljs.spec.alpha/invalid))
 
 (defn string-or-react-element? [s-or-e]
   (cond
@@ -69,7 +67,7 @@
                          react-e (r/create-element react-c)]
                      react-e))
     (string? s-or-e) s-or-e
-    :else :cljs.spec/invalid))
+    :else :cljs.spec.alpha/invalid))
 
 (defn fn-or-react-component?
   "Confirms either a valid react component was passed in or a function that returns a react component.
@@ -81,7 +79,7 @@
                     (let [clj-props (js->clj props :keywordize-keys true)
                           react-c (fn-or-c clj-props children)]
                       react-c))
-    :else :cljs.spec/invalid))
+    :else :cljs.spec.alpha/invalid))
 
 (defn fn-or-react-element? [fn-or-e]
   (cond
@@ -92,14 +90,14 @@
                           react-c (fn-or-e clj-props children)
                           react-e (r/create-element react-c)]
                       react-e))
-    :else :cljs.spec/invalid))
+    :else :cljs.spec.alpha/invalid))
 
 (defn navigation-options? [map-or-fn]
   (cond
     (map? map-or-fn) (s/conform :react-navigation.navigationOptions/all map-or-fn)
     (fn? map-or-fn) (fn [props]
                       (clj->js (s/conform :react-navigation.navigationOptions/all (map-or-fn (js->clj props :keywordize-keys true)))))
-    :else :cljs.spec/invalid))
+    :else :cljs.spec.alpha/invalid))
 
 
 ;; React
@@ -206,7 +204,7 @@
   "If navigationOptions are specified append to the react-component"
   [react-component navigationOptions]
 
-  (when (and navigationOptions (not= navigationOptions :cljs.spec/invalid))
+  (when (and navigationOptions (not= navigationOptions :cljs.spec.alpha/invalid))
     (aset react-component "navigationOptions" (clj->js navigationOptions)))
 
   react-component)
@@ -218,22 +216,22 @@
 (defn stack-screen [react-component navigationOptions]
   (let [react-component-conformed (s/conform :react/component react-component)
         navigationOptions-conformed (s/conform :react-navigation/navigationOptions navigationOptions)]
-    (assert (not= react-component-conformed :cljs.spec/invalid) "Invalid react component.")
-    (assert (not= navigationOptions-conformed :cljs.spec/invalid) "Invalid navigationOptions.")
+    (assert (not= react-component-conformed :cljs.spec.alpha/invalid) "Invalid react component.")
+    (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid) "Invalid navigationOptions.")
     (screen react-component-conformed navigationOptions-conformed)))
 
 (defn tab-screen [react-component navigationOptions]
   (let [react-component-conformed (s/conform :react/component react-component)
         navigationOptions-conformed (s/conform :react-navigation/navigationOptions navigationOptions)]
-    (assert (not= react-component-conformed :cljs.spec/invalid) "Invalid react component.")
-    (assert (not= navigationOptions-conformed :cljs.spec/invalid) "Invalid navigationOptions.")
+    (assert (not= react-component-conformed :cljs.spec.alpha/invalid) "Invalid react component.")
+    (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid) "Invalid navigationOptions.")
     (screen react-component-conformed navigationOptions-conformed)))
 
 (defn stack-navigator [routeConfigs stackNavigatorConfig]
   (let [routeConfigs-conformed (s/conform :react-navigation/RouteConfigs routeConfigs)
         StackNavigatorConfig-conformed (s/conform :react-navigation.StackNavigator/StackNavigatorConfig stackNavigatorConfig)]
-    (assert (not= routeConfigs-conformed :cljs.spec/invalid))
-    (assert (not= StackNavigatorConfig-conformed :cljs.spec/invalid))
+    (assert (not= routeConfigs-conformed :cljs.spec.alpha/invalid))
+    (assert (not= StackNavigatorConfig-conformed :cljs.spec.alpha/invalid))
     (if StackNavigatorConfig-conformed
       (StackNavigator (clj->js routeConfigs-conformed) (clj->js StackNavigatorConfig-conformed))
       (StackNavigator (clj->js routeConfigs-conformed)))))
@@ -241,6 +239,6 @@
 (defn tab-navigator [routeConfigs navigationOptions]
   (let [routeConfigs-conformed (s/conform :react-navigation/RouteConfigs routeConfigs)
         navigationOptions-conformed (s/conform :react-navigation/navigationOptions navigationOptions)]
-    (assert (not= routeConfigs-conformed :cljs.spec/invalid))
-    (assert (not= navigationOptions-conformed :cljs.spec/invalid))
+    (assert (not= routeConfigs-conformed :cljs.spec.alpha/invalid))
+    (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid))
     (TabNavigator (clj->js routeConfigs-conformed) (clj->js navigationOptions-conformed))))

@@ -2,9 +2,8 @@
   (:require [cljs-react-navigation.base :as base]
             [reagent.core :as r]
             [reagent.impl.component :as ric]
-            [cljs.spec :as s :include-macros true]
-            [cljs.spec.test :as stest :include-macros true]
-            [cljs.spec.impl.gen :as gen]))
+            [cljs.spec.alpha :as s :include-macros true]))
+
 
 (defn react-component?
   "Same as base, but now accepts a reagent component fn"
@@ -14,7 +13,7 @@
     (fn? c) (r/reactify-component
               (fn [props & children]
                 [c (js->clj props :keywordize-keys true) children]))
-    :else :cljs.spec/invalid))
+    :else :cljs.spec.alpha/invalid))
 
 (defn react-element?
   "Same as base, but now accepts a reagent component fn"
@@ -26,7 +25,7 @@
               (r/reactify-component
                 (fn [props & children]
                   [e (js->clj props :keywordize-keys true) children])))
-    :else :cljs.spec/invalid))
+    :else :cljs.spec.alpha/invalid))
 
 (defn fn-or-react-component?
   "Same as base, but now *expects* a reagent component if a fn is supplied"
@@ -36,7 +35,7 @@
     (fn? fn-or-c) (fn [props & children]
                     (let [clj-props (js->clj props :keywordize-keys true)]
                       (r/reactify-component (fn-or-c clj-props children))))
-    :else :cljs.spec/invalid))
+    :else :cljs.spec.alpha/invalid))
 
 (defn fn-or-react-element?
   "Same as base, but now *expects* a reagent component if a fn is supplied"
@@ -47,7 +46,7 @@
     (fn? fn-or-e) (fn [props & children]
                     (let [clj-props (js->clj props :keywordize-keys true)]
                       (r/as-element [fn-or-e clj-props children])))
-    :else :cljs.spec/invalid))
+    :else :cljs.spec.alpha/invalid))
 
 (defn string-or-react-element? [s-or-e]
   (cond
@@ -57,7 +56,7 @@
                                   (let [clj-props (js->clj props :keywordize-keys true)]
                                     [s-or-e clj-props children]))])
     (string? s-or-e) s-or-e
-    :else :cljs.spec/invalid))
+    :else :cljs.spec.alpha/invalid))
 
 ;; Spec overrides for Reagent Components
 (s/def :react/component (s/conformer react-component?))

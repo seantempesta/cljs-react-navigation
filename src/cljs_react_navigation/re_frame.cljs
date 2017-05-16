@@ -2,7 +2,6 @@
   (:require [cljs-react-navigation.base :as base]
             [cljs-react-navigation.reagent :as reagent]
             [reagent.core :as r]
-            [oops.core :refer [oget oget+ oset! ocall oapply ocall! oapply!]]
             [re-frame.core :refer [subscribe dispatch dispatch-sync reg-event-db trim-v reg-sub]]))
 
 (def ref-getStateForAction (atom nil))                      ;; HACK
@@ -18,7 +17,7 @@
   [trim-v]
   (fn [app-db [dispatch-args]]
     (let [routing-state (get app-db :routing)
-          type (oget dispatch-args "type")
+          type (aget dispatch-args "type")
           action-fn (get reagent/NavigationActionsMap type)
           action (action-fn dispatch-args)
           new-state (@ref-getStateForAction action routing-state)]
