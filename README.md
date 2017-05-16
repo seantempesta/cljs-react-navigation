@@ -53,11 +53,9 @@ First import the reagent version of the library library:
 (ns uiexplorer.routing
   (:require [cljs-react-navigation.reagent :refer [stack-navigator tab-navigator stack-screen tab-screen router]]))
            
-```
- [cljs-react-navigation.re-frame :refer [stack-navigator tab-navigator stack-screen tab-screen router]]
-           
+```          
 
-The basic idea is to create reagent-components that accept props like this:
+Then create reagent-components that accept props like this:
 
 ```clojure
 (defn home
@@ -110,7 +108,7 @@ TODO: Create an example
 
 Pretty much the same as the Reagent version, but you can store the routing state in re-frame's app-db (which is great for serializing state to AsyncStorage).  Also, dispatch routing changes from anywhere. 
 
-See the examples folder.
+See the [examples folder](https://github.com/seantempesta/cljs-react-navigation/tree/master/examples/re-frame/uiexplorer).
 
 ## TODO
 
