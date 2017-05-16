@@ -29,6 +29,18 @@ Add `react-navigation` to your project.
 npm install react-navigation --save
 ```
 
+If you're using re-natal, also add it to re-natal
+```js
+re-natal use-component react-navigation
+re-natal use-figwheel
+```
+
+If you're using tiensonqin's [expo template](https://github.com/tiensonqin/exponent-cljs-template), make sure to require react-navigation somewhere in your code.
+```clojure
+; react-navigation
+(defonce ReactNavigation (js/require "react-navigation"))
+```
+
 ## Documentation
 
 Anything `react-navigation` related is documented on [their site](https://reactnavigation.org/docs/intro/).  The idea for this library isn't to re-invent the wheel, but make it cljs friendly.  
