@@ -14,7 +14,8 @@
     {:headerTitle "Login"
      :headerRight (fn []
                     [:> Button {:title   "Sign In"
-                                :onPress #(navigate "Loading")}])}))
+                                :onPress #(do (dispatch [:login])
+                                              (navigate "Loading"))}])}))
 
 (defn login1 [{:keys [screenProps navigation] :as props}]
   (let [navigate (:navigate navigation)]
