@@ -4,6 +4,18 @@
             [reagent.core :as r]
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]))
 
+(def static-navigationOptions {:headerTitle "Login"
+                               :headerRight (fn []
+                                              [:> Button {:title   "Sign In"
+                                                          :onPress #(dispatch [:login])}])})
+
+(defn dynamic-navigationOptions [{:keys [navigation] :as props}]
+  (let [navigate (:navigate navigation)]
+    {:headerTitle "Login"
+     :headerRight (fn []
+                    [:> Button {:title   "Sign In"
+                                :onPress #(navigate "Loading")}])}))
+
 (defn login1 [{:keys [screenProps navigation] :as props}]
   (let [navigate (:navigate navigation)]
     (fn [props]
@@ -17,10 +29,10 @@
 
 (defn loading [props]
   (fn [props]
-    [:> View {:style {:flex           1
+    [:> View {:style {:flex            1
                       :backgroundColor "#333333"
-                      :alignItems     "center"
-                      :justifyContent "center"}}
+                      :alignItems      "center"
+                      :justifyContent  "center"}}
      [:> ActivityIndicator
       {:animating true
        :style     {:alignItems     "center"

@@ -74,7 +74,8 @@
                                                  :color (if focused blue darkGrey)
                                                  :size  26}])})
 
-(def LoginStack (stack-navigator {:Login1  {:screen (stack-screen login/login1 {:title "Login"})}
+
+(def LoginStack (stack-navigator {:Login1  {:screen (stack-screen login/login1 login/dynamic-navigationOptions)}
                                   :Loading {:screen (stack-screen login/loading {:header nil})}}))
 (def HomeStack (stack-navigator {:Home        {:screen (stack-screen home {:title "Home"})}
                                  :Placeholder {:screen (stack-screen placeholder {:title "Placeholder"})}}))
