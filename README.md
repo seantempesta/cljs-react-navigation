@@ -104,7 +104,7 @@ And then you can create stacks and screens for them like this:
 And then you can just render that Stack like a normal reagent component:
 
 ```clojure
-(def app-root []
+(defn app-root []
   (fn []
     [:> HomeStack {}]))
 
