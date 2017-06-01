@@ -1,7 +1,7 @@
 (ns uiexplorer.routing
   (:require [uiexplorer.react-requires :refer [Platform Button TouchableOpacity Ionicons InteractionManager View ScrollView Text TouchableHighlight]]
             [uiexplorer.scenes.login :as login]
-            [cljs-react-navigation.re-frame :refer [stack-navigator tab-navigator stack-screen tab-screen router]]
+            [cljs-react-navigation.re-frame :refer [stack-navigator tab-navigator stack-screen tab-screen router] :as nav]
             [reagent.core :as r]
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]))
 
@@ -96,7 +96,9 @@
 
 (defn app-root []
   (r/create-class
-    {:component-will-mount (fn []
-                             (dispatch-sync [:reset-routing-state]))
-     :reagent-render       (fn []
-                             [router {:root-router AllRoutesStack}])}))
+    (let [nav-state (subscribe [::nav/routing-state])]
+      {:component-will-mount (fn []
+                               (when-not @nav-state
+                                 (dispatch-sync [:reset-routing-state])))
+       :reagent-render       (fn []
+                               [router {:root-router AllRoutesStack}])})))
