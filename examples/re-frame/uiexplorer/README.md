@@ -6,7 +6,7 @@
 
 #### Install [Expo cli client](https://docs.expo.io/versions/latest/introduction/installation.html)
 ``` shell
-    yarn global add expo
+    yarn global add exp
 ```
 
 #### Install npm modules
