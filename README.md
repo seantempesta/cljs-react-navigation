@@ -35,7 +35,7 @@ re-natal use-component react-navigation
 re-natal use-figwheel
 ```
 
-If you're using tiensonqin's [expo template](https://github.com/tiensonqin/exponent-cljs-template), make sure to require react-navigation somewhere in your code.
+If you're using my [cljs expo template](https://github.com/seantempesta/expo-cljs-template), make sure to require react-navigation somewhere in your code.
 ```clojure
 ; react-navigation
 (defonce ReactNavigation (js/require "react-navigation"))
