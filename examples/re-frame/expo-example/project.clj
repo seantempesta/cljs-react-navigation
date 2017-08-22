@@ -1,4 +1,4 @@
-(defproject uiexplorer "0.1.0-SNAPSHOT"
+(defproject expo-example "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -7,7 +7,6 @@
                  [org.clojure/clojurescript "1.9.854"]
                  [reagent "0.7.0" :exclusions [cljsjs/react cljsjs/react-dom cljsjs/react-dom-server cljsjs/create-react-class]]
                  [re-frame "0.9.3"]
-                 [cljs-react-navigation "0.1.0"]
                  [react-native-externs "0.1.0"]]
   :plugins [[lein-cljsbuild "1.1.4"]
             [lein-figwheel "0.5.11"]]
@@ -23,7 +22,7 @@
                                   [com.cemerick/piggieback "0.2.1"]]
                    :source-paths ["src" "env/dev"]
                    :cljsbuild    {:builds [{:id "main"
-                                            :source-paths ["src" "env/dev"]
+                                            :source-paths ["src" "env/dev" "../../../src/"]
                                             :figwheel     true
                                             :compiler     {:output-to     "target/not-used.js"
                                                            :main          "env.main"
@@ -31,7 +30,7 @@
                                                            :optimizations :none}}]}
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
              :prod {:cljsbuild {:builds [{:id "main"
-                                          :source-paths ["src" "env/prod"]
+                                          :source-paths ["src" "env/prod" "../../../src/"]
                                           :compiler     {:output-to     "main.js"
                                                          :main          "env.main"
                                                          :output-dir    "target"

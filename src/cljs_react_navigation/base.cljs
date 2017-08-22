@@ -37,17 +37,28 @@
 
 (assert (and React ReactNavigation) "React and React Navigation must be installed.  Maybe NPM install them and restart the packager?")
 
-(defn react-component? [c]
+;; Spec conforming functions
+;;
+
+(defn react-component?
+  "Spec conforming function.  Accepts a react class or returns :cljs.spec.alpha/invalid."
+  [c]
   (cond
     (ric/react-class? c) c
     :else :cljs.spec.alpha/invalid))
 
-(defn react-element? [e]
+(defn react-element?
+  "Spec conforming function.  Accepts either a react element, conforms a react class to an element, or returns :cljs.spec.alpha/invalid."
+  [e]
   (cond
+    (isValidElement e) e
     (ric/react-class? e) (r/create-element e)
     :else :cljs.spec.alpha/invalid))
 
-(defn string-or-react-component? [s-or-c]
+(defn string-or-react-component?
+  "Accepts either a string, react component, or a fn that returns a react component.  If it's a fn, props will automatically
+  convert (js->clj) when the fn is called."
+  [s-or-c]
   (cond
     (ric/react-class? s-or-c) s-or-c
     (string? s-or-c) s-or-c
@@ -81,7 +92,10 @@
                       react-c))
     :else :cljs.spec.alpha/invalid))
 
-(defn fn-or-react-element? [fn-or-e]
+(defn fn-or-react-element?
+  "Confirms either a valid react element was passed in or a function that returns a react element.
+  If it's a function, props will be converted to clojure structures with keywords. Expects the fn to return a valid component"
+  [fn-or-e]
   (cond
     (isValidElement fn-or-e) fn-or-e
     (ric/react-class? fn-or-e) (r/create-element fn-or-e)
@@ -92,11 +106,17 @@
                       react-e))
     :else :cljs.spec.alpha/invalid))
 
-(defn navigation-options? [map-or-fn]
+(defn navigation-options?
+  "Conforms a clj map (or a function that returns a clj map) to a js object"
+  [map-or-fn]
   (cond
     (map? map-or-fn) (s/conform :react-navigation.navigationOptions/all map-or-fn)
     (fn? map-or-fn) (fn [props]
-                      (clj->js (s/conform :react-navigation.navigationOptions/all (map-or-fn (js->clj props :keywordize-keys true)))))
+                      (let [clj-props (js->clj props :keywordize-keys true)
+                            fn-output (map-or-fn clj-props)
+                            conformed (s/conform :react-navigation.navigationOptions/all fn-output)
+                            conformed-js (clj->js conformed)]
+                        conformed-js))
     :else :cljs.spec.alpha/invalid))
 
 
@@ -200,7 +220,7 @@
 
 
 
-(defn screen
+(defn append-navigationOptions
   "If navigationOptions are specified append to the react-component"
   [react-component navigationOptions]
 
@@ -209,7 +229,7 @@
 
   react-component)
 
-(s/fdef screen
+(s/fdef append-navigationOptions
         :args (s/tuple :react/component :react-navigation/navigationOptions)
         :ret #(ric/react-class? %))
 
@@ -218,15 +238,17 @@
         navigationOptions-conformed (s/conform :react-navigation/navigationOptions navigationOptions)]
     (assert (not= react-component-conformed :cljs.spec.alpha/invalid) "Invalid react component.")
     (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid) "Invalid navigationOptions.")
-    (screen react-component-conformed navigationOptions-conformed)))
+    (append-navigationOptions react-component-conformed navigationOptions-conformed)))
 
 (defn tab-screen [react-component navigationOptions]
   (let [react-component-conformed (s/conform :react/component react-component)
         navigationOptions-conformed (s/conform :react-navigation/navigationOptions navigationOptions)]
     (assert (not= react-component-conformed :cljs.spec.alpha/invalid) "Invalid react component.")
     (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid) "Invalid navigationOptions.")
-    (screen react-component-conformed navigationOptions-conformed)))
+    (append-navigationOptions react-component-conformed navigationOptions-conformed)))
 
+;; Navigators
+;;
 (defn stack-navigator [routeConfigs stackNavigatorConfig]
   (let [routeConfigs-conformed (s/conform :react-navigation/RouteConfigs routeConfigs)
         StackNavigatorConfig-conformed (s/conform :react-navigation.StackNavigator/StackNavigatorConfig stackNavigatorConfig)]

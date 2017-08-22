@@ -40,3 +40,6 @@
 
 ; react-native-vector-icons
 (defonce Ionicons (aget (js/require "react-native-vector-icons/Ionicons") "default"))
+
+; react-navigation
+(defonce ReactNavigation (js/require "react-navigation"))

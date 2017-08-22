@@ -1,14 +1,20 @@
-# uiexplorer
+## Re-frame demo of cljs-react-navigation
 
-A Clojure library designed to ... well, that part is up to you.
+### To run
 
-## Usage
+#### Install Expo [XDE and mobile client](https://docs.expo.io/versions/latest/introduction/installation.html)
+   
+#### Install [Lein](http://leiningen.org/#install) 
 
-FIXME
+#### Install npm modules
 
-## License
+``` shell
+    yarn install
+```
 
-Copyright © 2017 FIXME
+#### Start the figwheel server and cljs repl
+``` shell
+    lein figwheel
+```
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+#### Open the project in XDE, select the device icon to start up a Simulator (or run it on your device with the Share button)
