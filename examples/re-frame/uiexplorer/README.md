@@ -1,10 +1,13 @@
 ## Re-frame demo of cljs-react-navigation
 
 ### To run
-
-#### Install Expo [XDE and mobile client](https://docs.expo.io/versions/latest/introduction/installation.html)
    
 #### Install [Lein](http://leiningen.org/#install) 
+
+#### Install [Expo cli client](https://docs.expo.io/versions/latest/introduction/installation.html)
+``` shell
+    yarn global add expo
+```
 
 #### Install npm modules
 
@@ -17,4 +20,9 @@
     lein figwheel
 ```
 
-#### Open the project in XDE, select the device icon to start up a Simulator (or run it on your device with the Share button)
+#### In a new console tab, run expo
+``` shell
+    exp start --host lan --ios
+               # or
+    exp start --host lan --android
+```
