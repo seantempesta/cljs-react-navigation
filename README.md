@@ -6,18 +6,18 @@ This library is my attempt to unify all `cljs` `react-navigation` libraries unde
 
 ![](https://media.giphy.com/media/3o7bu14rq4AVqTK1Nu/giphy.gif)
 
-## Dependencies
+## Tested with
 
 Clojurescript
 ```clojure
-[org.clojure/clojurescript "1.9.542"] ;; using cljs.spec.alpha namespace
-[reagent "0.6.1"]                     ;; Import the cljs-react-navigation.reagent namespace
-[re-frame "0.9.2"]                    ;; Import the cljs-react-navigation.re-frame namespace
+[org.clojure/clojurescript "1.9.854"] ;; using cljs.spec.alpha namespace
+[reagent "0.7.0"]                     ;; Import the cljs-react-navigation.reagent namespace
+[re-frame "0.9.3"]                    ;; Import the cljs-react-navigation.re-frame namespace
 ```
 
 Javascript
 ```js
-"react": "16.0.0-alpha.6",
+"react": "16.0.0-alpha.12",
 "react-native": "0.44.0",
 "react-navigation": "^1.0.0-beta.9"
 ```
