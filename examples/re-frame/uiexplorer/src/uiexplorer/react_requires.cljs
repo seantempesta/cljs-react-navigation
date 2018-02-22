@@ -37,9 +37,10 @@
 (defonce VirtualizedList (.-VirtualizedList js/ReactNative))
 (defonce DatePickerIOS (aget js/ReactNative "DatePickerIOS"))
 (defonce DatePickerAndroid (aget js/ReactNative "DatePickerAndroid"))
+(defonce Expo (js/require "expo"))
 
 ; react-native-vector-icons
-(defonce Ionicons (aget (js/require "react-native-vector-icons/Ionicons") "default"))
+(defonce Ionicons (.-Ionicons (js/require "@expo/vector-icons")))
 
 ; react-navigation
 (defonce ReactNavigation (js/require "react-navigation"))
