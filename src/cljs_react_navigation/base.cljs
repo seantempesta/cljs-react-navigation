@@ -262,10 +262,10 @@
 (s/def :react-navigation.SwitchNavigator.SwitchNavigatorConfig/resetOnBlur boolean?)
 (s/def :react-navigation.SwitchNavigator.SwitchNavigatorConfig/paths map?)
 (s/def :react-navigation.SwitchNavigator.SwitchNavigatorConfig/backBehavior #{"initialroute" "none"})
-(s/def :react-navigation.TabNavigator/TabNavigatorConfig (s/nilable (s/keys :opt-un [:react-navigation.SwitchNavigator.SwitchNavigatorConfig/initialRouteName
-                                                                                     :react-navigation.SwitchNavigator.SwitchNavigatorConfig/resetOnBlur
-                                                                                     :react-navigation.SwitchNavigator.SwitchNavigatorConfig/paths
-                                                                                     :react-navigation.SwitchNavigator.SwitchNavigatorConfig/backBehavior])))
+(s/def :react-navigation.SwitchNavigator/SwitchNavigatorConfig (s/nilable (s/keys :opt-un [:react-navigation.SwitchNavigator.SwitchNavigatorConfig/initialRouteName
+                                                                                           :react-navigation.SwitchNavigator.SwitchNavigatorConfig/resetOnBlur
+                                                                                           :react-navigation.SwitchNavigator.SwitchNavigatorConfig/paths
+                                                                                           :react-navigation.SwitchNavigator.SwitchNavigatorConfig/backBehavior])))
 
 (defn append-navigationOptions
   "If navigationOptions are specified append to the react-component"

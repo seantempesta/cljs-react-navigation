@@ -71,5 +71,8 @@
 (def NavigationActionsMap base/NavigationActionsMap)
 (def stack-screen base/stack-screen)
 (def tab-screen base/tab-screen)
+(def drawer-component base/drawer-component)
 (def stack-navigator base/stack-navigator)
 (def tab-navigator base/tab-navigator)
+(def drawer-navigator base/drawer-navigator)
+(def switch-navigator base/switch-navigator)

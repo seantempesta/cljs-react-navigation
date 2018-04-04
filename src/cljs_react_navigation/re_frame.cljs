@@ -53,8 +53,11 @@
 ;; API
 (def stack-screen reagent/stack-screen)
 (def tab-screen reagent/tab-screen)
+(def drawer-component reagent/drawer-component)
 (def stack-navigator reagent/stack-navigator)
 (def tab-navigator reagent/tab-navigator)
+(def drawer-navigator reagent/drawer-navigator)
+(def switch-navigator reagent/switch-navigator)
 
 
 (defn router [{:keys [root-router] :as props}]
