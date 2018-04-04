@@ -331,4 +331,4 @@
         navigationOptions-conformed (s/conform :react-navigation.SwitchNavigator/SwitchNavigatorConfig navigationOptions)]
     (assert (not= routeConfigs-conformed :cljs.spec.alpha/invalid))
     (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid))
-    (DrawerNavigator (clj->js routeConfigs-conformed) (clj->js navigationOptions-conformed))))
+    (SwitchNavigator (clj->js routeConfigs-conformed) (clj->js navigationOptions-conformed))))
