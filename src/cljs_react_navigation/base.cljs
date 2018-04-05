@@ -319,16 +319,20 @@
     (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid))
     (TabNavigator (clj->js routeConfigs-conformed) (clj->js navigationOptions-conformed))))
 
-(defn drawer-navigator [routeConfigs navigationOptions]
+(defn drawer-navigator [routeConfigs drawerNavigatorConfig]
   (let [routeConfigs-conformed (s/conform :react-navigation/RouteConfigs routeConfigs)
-        navigationOptions-conformed (s/conform :react-navigation.DrawerNavigator/DrawerNavigatorConfig navigationOptions)]
+        drawerNavigatorConfig-conformed (s/conform :react-navigation.DrawerNavigator/DrawerNavigatorConfig drawerNavigatorConfig)]
     (assert (not= routeConfigs-conformed :cljs.spec.alpha/invalid))
-    (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid))
-    (DrawerNavigator (clj->js routeConfigs-conformed) (clj->js navigationOptions-conformed))))
+    (assert (not= drawerNavigatorConfig-conformed :cljs.spec.alpha/invalid))
+    (if drawerNavigatorConfig-conformed
+      (DrawerNavigator (clj->js routeConfigs-conformed) (clj->js drawerNavigatorConfig-conformed))
+      (DrawerNavigator (clj->js routeConfigs-conformed)))))
 
-(defn switch-navigator [routeConfigs navigationOptions]
+(defn switch-navigator [routeConfigs switchNavigatorConfig]
   (let [routeConfigs-conformed (s/conform :react-navigation/RouteConfigs routeConfigs)
-        navigationOptions-conformed (s/conform :react-navigation.SwitchNavigator/SwitchNavigatorConfig navigationOptions)]
+        switchNavigatorConfig-conformed (s/conform :react-navigation.SwitchNavigator/SwitchNavigatorConfig switchNavigatorConfig)]
     (assert (not= routeConfigs-conformed :cljs.spec.alpha/invalid))
-    (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid))
-    (SwitchNavigator (clj->js routeConfigs-conformed) (clj->js navigationOptions-conformed))))
+    (assert (not= switchNavigatorConfig-conformed :cljs.spec.alpha/invalid))
+    (if switchNavigatorConfig-conformed
+      (SwitchNavigator (clj->js routeConfigs-conformed) (clj->js switchNavigatorConfig-conformed))
+      (SwitchNavigator (clj->js routeConfigs-conformed)))))
