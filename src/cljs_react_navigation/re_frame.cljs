@@ -59,14 +59,29 @@
 (def drawer-navigator reagent/drawer-navigator)
 (def switch-navigator reagent/switch-navigator)
 
+(def init-state
+  (fn [main key]
+    (-> main
+        .-router
+        (as-> router
+            (.getStateForAction router
+                                (.getActionForPathAndParams router (name key)))))))
 
-(defn router [{:keys [root-router] :as props}]
+(def nil-fn (fn [_]))
+
+(defn router [{:keys [root-router init-route-name add-listener]
+               :or {add-listener nil-fn init-route-name :start-route}
+               :as props}]
   (let [routing-sub (subscribe [::routing-state])
         getStateForAction (aget root-router "router" "getStateForAction")]
     (reset! ref-getStateForAction getStateForAction)
     (fn [props]
-      (let [routing-state @routing-sub]
-        [:> root-router {:navigation (base/addNavigationHelpers (clj->js {:state    routing-state
-                                                                          :dispatch (fn [action]
-                                                                                      (let [next-state (getStateForAction action routing-state)]
-                                                                                        (dispatch [::swap-routing-state next-state])))}))}]))))
+      (let [routing-state (or @routing-sub
+                              (init-state root-router init-route-name))]
+        [:> root-router {:navigation
+                         (addNavigationHelpers
+                          (clj->js {:state    routing-state
+                                    :addListener add-listener
+                                    :dispatch (fn [action]
+                                                (let [next-state (getStateForAction action routing-state)]
+                                                  (dispatch [::swap-routing-state next-state])))}))}]))))
