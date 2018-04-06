@@ -24,6 +24,7 @@
 (defonce StackNavigator (aget ReactNavigation "StackNavigator"))
 (defonce TabNavigator (aget ReactNavigation "TabNavigator"))
 (defonce DrawerNavigator (aget ReactNavigation "DrawerNavigator"))
+(defonce SwitchNavigator (aget ReactNavigation "SwitchNavigator"))
 
 ;; Routers
 (defonce StackRouter (aget ReactNavigation "StackRouter"))
@@ -218,7 +219,53 @@
                                                                                      :react-navigation.TabNavigator.TabNavigatorConfig/backBehavior
                                                                                      :react-navigation.TabNavigator.TabNavigatorConfig/tabBarOptions])))
 
+;; DrawerNavigator DrawerNavigatorConfig
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig/drawerWidth number?)
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig/drawerPosition #{"left" "right"})
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig/contentComponent (s/conformer fn-or-react-component?))
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig/useNativeAnimations boolean?)
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig/drawerBackgroundColor string?)
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig/initialRouteName string?)
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig/order (s/coll-of string?))
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig/paths map?)
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig/backBehavior #{"initialroute" "none"})
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/activeTintColor string?)
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/activeBackgroundColor string?)
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/inactiveTintColor string?)
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/inactiveBackgroundColor string?)
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/onItemPress (s/conformer fn-or-react-component?))
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/itemsContainerStyle map?)
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/iconContainerStyle map?)
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/labelStyle map?)
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/itemStyle (s/conformer string-or-react-element?))
+(s/def :react-navigation.DrawerNavigator.DrawerNavigatorConfig/contentOptions (s/nilable (s/keys :opt-un [:react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/activeTintColor
+                                                                                                          :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/activeBackgroundColor
+                                                                                                          :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/inactiveTintColor
+                                                                                                          :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/inactiveBackgroundColor
+                                                                                                          :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/onItemPress
+                                                                                                          :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/itemsContainerStyle
+                                                                                                          :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/iconContainerStyle
+                                                                                                          :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/labelStyle
+                                                                                                          :react-navigation.DrawerNavigator.DrawerNavigatorConfig.contentOptions/itemStyle])))
+(s/def :react-navigation.DrawerNavigator/DrawerNavigatorConfig (s/nilable (s/keys :opt-un [:react-navigation.DrawerNavigator.DrawerNavigatorConfig/drawerWidth
+                                                                                           :react-navigation.DrawerNavigator.DrawerNavigatorConfig/drawerPosition
+                                                                                           :react-navigation.DrawerNavigator.DrawerNavigatorConfig/contentComponent
+                                                                                           :react-navigation.DrawerNavigator.DrawerNavigatorConfig/contentOptions
+                                                                                           :react-navigation.DrawerNavigator.DrawerNavigatorConfig/useNativeAnimations
+                                                                                           :react-navigation.DrawerNavigator.DrawerNavigatorConfig/drawerBackgroundColor
+                                                                                           :react-navigation.DrawerNavigator.DrawerNavigatorConfig/initialRouteName
+                                                                                           :react-navigation.DrawerNavigator.DrawerNavigatorConfig/order
+                                                                                           :react-navigation.DrawerNavigator.DrawerNavigatorConfig/paths
+                                                                                           :react-navigation.DrawerNavigator.DrawerNavigatorConfig/backBehavior])))
 
+(s/def :react-navigation.SwitchNavigator.SwitchNavigatorConfig/initialRouteName string?)
+(s/def :react-navigation.SwitchNavigator.SwitchNavigatorConfig/resetOnBlur boolean?)
+(s/def :react-navigation.SwitchNavigator.SwitchNavigatorConfig/paths map?)
+(s/def :react-navigation.SwitchNavigator.SwitchNavigatorConfig/backBehavior #{"initialroute" "none"})
+(s/def :react-navigation.SwitchNavigator/SwitchNavigatorConfig (s/nilable (s/keys :opt-un [:react-navigation.SwitchNavigator.SwitchNavigatorConfig/initialRouteName
+                                                                                           :react-navigation.SwitchNavigator.SwitchNavigatorConfig/resetOnBlur
+                                                                                           :react-navigation.SwitchNavigator.SwitchNavigatorConfig/paths
+                                                                                           :react-navigation.SwitchNavigator.SwitchNavigatorConfig/backBehavior])))
 
 (defn append-navigationOptions
   "If navigationOptions are specified append to the react-component"
@@ -247,6 +294,13 @@
     (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid) "Invalid navigationOptions.")
     (append-navigationOptions react-component-conformed navigationOptions-conformed)))
 
+(defn drawer-component [react-component navigationOptions]
+  (let [react-component-conformed (s/conform :react/component react-component)
+        navigationOptions-conformed (s/conform :react-navigation/navigationOptions navigationOptions)]
+    (assert (not= react-component-conformed :cljs.spec.alpha/invalid) "Invalid react component.")
+    (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid) "Invalid navigationOptions.")
+    (append-navigationOptions react-component-conformed navigationOptions-conformed)))
+
 ;; Navigators
 ;;
 (defn stack-navigator [routeConfigs stackNavigatorConfig]
@@ -264,3 +318,21 @@
     (assert (not= routeConfigs-conformed :cljs.spec.alpha/invalid))
     (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid))
     (TabNavigator (clj->js routeConfigs-conformed) (clj->js navigationOptions-conformed))))
+
+(defn drawer-navigator [routeConfigs drawerNavigatorConfig]
+  (let [routeConfigs-conformed (s/conform :react-navigation/RouteConfigs routeConfigs)
+        drawerNavigatorConfig-conformed (s/conform :react-navigation.DrawerNavigator/DrawerNavigatorConfig drawerNavigatorConfig)]
+    (assert (not= routeConfigs-conformed :cljs.spec.alpha/invalid))
+    (assert (not= drawerNavigatorConfig-conformed :cljs.spec.alpha/invalid))
+    (if drawerNavigatorConfig-conformed
+      (DrawerNavigator (clj->js routeConfigs-conformed) (clj->js drawerNavigatorConfig-conformed))
+      (DrawerNavigator (clj->js routeConfigs-conformed)))))
+
+(defn switch-navigator [routeConfigs switchNavigatorConfig]
+  (let [routeConfigs-conformed (s/conform :react-navigation/RouteConfigs routeConfigs)
+        switchNavigatorConfig-conformed (s/conform :react-navigation.SwitchNavigator/SwitchNavigatorConfig switchNavigatorConfig)]
+    (assert (not= routeConfigs-conformed :cljs.spec.alpha/invalid))
+    (assert (not= switchNavigatorConfig-conformed :cljs.spec.alpha/invalid))
+    (if switchNavigatorConfig-conformed
+      (SwitchNavigator (clj->js routeConfigs-conformed) (clj->js switchNavigatorConfig-conformed))
+      (SwitchNavigator (clj->js routeConfigs-conformed)))))
