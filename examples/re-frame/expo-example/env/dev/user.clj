@@ -20,7 +20,7 @@
 (defn enable-source-maps
   []
   (println "Source maps enabled.")
-  (let [path "node_modules/metro-bundler/build/Server/index.js"]
+  (let [path "node_modules/metro-bundler/src/Server/index.js"]
     (spit path
           (str/replace (slurp path) "/\\.map$/" "/main.map$/"))))
 
@@ -32,13 +32,14 @@
 (defn get-lan-ip
   []
   (cond
-    (some #{(System/getProperty "os.name")} ["Mac OS X" "Windows 10"])
+    (= "Mac OS X" (System/getProperty "os.name"))
     (.getHostAddress (java.net.InetAddress/getLocalHost))
 
     :else
     (->> (java.net.NetworkInterface/getNetworkInterfaces)
          (enumeration-seq)
          (filter #(not (or (str/starts-with? (.getName %) "docker")
+                           (str/starts-with? (.getName %) "vboxnet")
                            (str/starts-with? (.getName %) "br-"))))
          (map #(.getInterfaceAddresses %))
          (map
@@ -71,8 +72,8 @@
   (let [modules (->> (file-seq (io/file "assets"))
                      (filter #(and (not (re-find #"DS_Store" (str %)))
                                    (.isFile %)))
-                     (map (fn [file] (when-let [unix-path (->> file .toPath .iterator iterator-seq (str/join "/"))]
-                                      (str "../../" unix-path))))
+                     (map (fn [file] (when-let [path (str file)]
+                                      (str "../../" path))))
                      (concat js-modules ["react" "react-native" "expo" "create-react-class"])
                      (distinct))
         modules-map (zipmap
@@ -81,7 +82,6 @@
                                      (if (str/starts-with? % "../../assets")
                                        (-> %
                                            (str/replace "../../" "./")
-                                           (str/replace "\\" "/")
                                            (str/replace "@2x" "")
                                            (str/replace "@3x" ""))
                                        %)
@@ -89,7 +89,6 @@
                      (->> modules
                           (map #(format "(js/require \"%s\")"
                                         (-> %
-                                            (str/replace "\\" "/")
                                             (str/replace "@2x" "")
                                             (str/replace "@3x" ""))))))]
     (try
