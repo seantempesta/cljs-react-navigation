@@ -43,7 +43,7 @@ If you're using my [cljs expo template](https://github.com/seantempesta/expo-clj
 
 ## Documentation
 
-Anything `react-navigation` related is documented on [their site](https://reactnavigation.org/docs/intro/).  The idea for this library isn't to re-invent the wheel, but make it cljs friendly.  
+Anything `react-navigation` related is documented on [their site](https://reactnavigation.org/docs/getting-started.html).  The idea for this library isn't to re-invent the wheel, but make it cljs friendly.  
 
 Specifically:
 - Conforming whatever cljs wrapper components into the correct react components/elements
