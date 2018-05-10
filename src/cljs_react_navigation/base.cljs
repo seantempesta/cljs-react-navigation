@@ -1,7 +1,8 @@
 (ns cljs-react-navigation.base
   (:require [reagent.core :as r]
             [reagent.impl.component :as ric]
-            [cljs.spec.alpha :as s :include-macros true]))
+            [cljs.spec.alpha :as s :include-macros true]
+            [goog.object :as gobj]))
 
 (defonce React (js/require "react"))
 (defonce ReactNavigation (js/require "react-navigation"))
