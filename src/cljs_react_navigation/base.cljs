@@ -1,40 +1,41 @@
 (ns cljs-react-navigation.base
-  (:require [reagent.core :as r]
-            [reagent.impl.component :as ric]
-            [cljs.spec.alpha :as s :include-macros true]))
+  (:require [cljs.spec.alpha :as s :include-macros true]
+            [goog.object :as gobj]
+            [reagent.core :as r]
+            [reagent.impl.component :as ric]))
 
 (defonce React (js/require "react"))
 (defonce ReactNavigation (js/require "react-navigation"))
-(defonce isValidElement (aget React "isValidElement"))
+(defonce isValidElement (gobj/get React #js ["isValidElement"]))
 
 ;; Core
-(defonce createNavigationContainer (aget ReactNavigation "createNavigationContainer"))
-(defonce StateUtils (aget ReactNavigation "StateUtils"))
-(defonce addNavigationHelpers (aget ReactNavigation "addNavigationHelpers"))
-(defonce NavigationActions (aget ReactNavigation "NavigationActions"))
-(defonce NavigationActionsMap {"Navigation/INIT"       (aget NavigationActions "init")
-                               "Navigation/URI"        (aget NavigationActions "uri")
-                               "Navigation/NAVIGATE"   (aget NavigationActions "navigate")
-                               "Navigation/BACK"       (aget NavigationActions "back")
-                               "Navigation/RESET"      (aget NavigationActions "reset")
-                               "Navigation/SET_PARAMS" (aget NavigationActions "setParams")})
+(defonce createNavigationContainer (gobj/get ReactNavigation #js ["createNavigationContainer"]))
+(defonce StateUtils (gobj/get ReactNavigation #js ["StateUtils"]))
+(defonce addNavigationHelpers (gobj/get ReactNavigation #js ["addNavigationHelpers"]))
+(defonce NavigationActions (gobj/get ReactNavigation #js ["NavigationActions"]))
+(defonce NavigationActionsMap {"Navigation/INIT"       (gobj/get NavigationActions #js ["init"])
+                               "Navigation/URI"        (gobj/get NavigationActions #js ["uri"])
+                               "Navigation/NAVIGATE"   (gobj/get NavigationActions #js ["navigate"])
+                               "Navigation/BACK"       (gobj/get NavigationActions #js ["back"])
+                               "Navigation/RESET"      (gobj/get NavigationActions #js ["reset"])
+                               "Navigation/SET_PARAMS" (gobj/get NavigationActions #js ["setParams"])})
 
 ;; Navigators
-(defonce createNavigator (aget ReactNavigation "createNavigator"))
-(defonce StackNavigator (aget ReactNavigation "StackNavigator"))
-(defonce TabNavigator (aget ReactNavigation "TabNavigator"))
-(defonce DrawerNavigator (aget ReactNavigation "DrawerNavigator"))
-(defonce SwitchNavigator (aget ReactNavigation "SwitchNavigator"))
+(defonce createNavigator (gobj/get ReactNavigation #js ["createNavigator"]))
+(defonce StackNavigator (gobj/get ReactNavigation #js ["StackNavigator"]))
+(defonce TabNavigator (gobj/get ReactNavigation #js ["TabNavigator"]))
+(defonce DrawerNavigator (gobj/get ReactNavigation #js ["DrawerNavigator"]))
+(defonce SwitchNavigator (gobj/get ReactNavigation #js ["SwitchNavigator"]))
 
 ;; Routers
-(defonce StackRouter (aget ReactNavigation "StackRouter"))
-(defonce TabRouter (aget ReactNavigation "TabRouter"))
+(defonce StackRouter (gobj/get ReactNavigation #js ["StackRouter"]))
+(defonce TabRouter (gobj/get ReactNavigation #js ["TabRouter"]))
 
 ;; Views
-(defonce Transitioner (aget ReactNavigation "Transitioner"))
-(defonce CardStack (aget ReactNavigation "CardStack"))
-(defonce DrawerView (aget ReactNavigation "DrawerView"))
-(defonce TabView (aget ReactNavigation "TabView"))
+(defonce Transitioner (gobj/get ReactNavigation #js ["Transitioner"]))
+(defonce CardStack (gobj/get ReactNavigation #js ["CardStack"]))
+(defonce DrawerView (gobj/get ReactNavigation #js ["DrawerView"]))
+(defonce TabView (gobj/get ReactNavigation #js ["TabView"]))
 
 (assert (and React ReactNavigation) "React and React Navigation must be installed.  Maybe NPM install them and restart the packager?")
 
