@@ -79,7 +79,7 @@
       (let [routing-state (or @routing-sub
                               (init-state root-router init-route-name))]
         [:> root-router {:navigation
-                         (addNavigationHelpers
+                         (base/addNavigationHelpers
                           (clj->js {:state    routing-state
                                     :addListener add-listener
                                     :dispatch (fn [action]
