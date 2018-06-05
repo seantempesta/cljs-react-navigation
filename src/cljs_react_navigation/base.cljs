@@ -11,7 +11,6 @@
 ;; Core
 (defonce createNavigationContainer (gobj/get ReactNavigation #js ["createNavigationContainer"]))
 (defonce StateUtils (gobj/get ReactNavigation #js ["StateUtils"]))
-(defonce addNavigationHelpers (gobj/get ReactNavigation #js ["addNavigationHelpers"]))
 (defonce NavigationActions (gobj/get ReactNavigation #js ["NavigationActions"]))
 (defonce NavigationActionsMap {"Navigation/INIT"       (gobj/get NavigationActions #js ["init"])
                                "Navigation/URI"        (gobj/get NavigationActions #js ["uri"])

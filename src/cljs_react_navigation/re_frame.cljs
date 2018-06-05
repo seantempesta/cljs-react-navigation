@@ -79,9 +79,8 @@
       (let [routing-state (or @routing-sub
                               (init-state root-router init-route-name))]
         [:> root-router {:navigation
-                         (base/addNavigationHelpers
-                          (clj->js {:state    routing-state
-                                    :addListener add-listener
-                                    :dispatch (fn [action]
-                                                (let [next-state (getStateForAction action routing-state)]
-                                                  (dispatch [::swap-routing-state next-state])))}))}]))))
+                         (clj->js {:state    routing-state
+                                   :addListener add-listener
+                                   :dispatch (fn [action]
+                                               (let [next-state (getStateForAction action routing-state)]
+                                                 (dispatch [::swap-routing-state next-state])))})}]))))
