@@ -21,10 +21,12 @@
 
 ;; Navigators
 (defonce createNavigator (gobj/get ReactNavigation #js ["createNavigator"]))
-(defonce StackNavigator (gobj/get ReactNavigation #js ["StackNavigator"]))
-(defonce TabNavigator (gobj/get ReactNavigation #js ["TabNavigator"]))
-(defonce DrawerNavigator (gobj/get ReactNavigation #js ["DrawerNavigator"]))
-(defonce SwitchNavigator (gobj/get ReactNavigation #js ["SwitchNavigator"]))
+(defonce StackNavigator (gobj/get ReactNavigation #js ["createStackNavigator"]))
+(defonce TabNavigator (gobj/get ReactNavigation #js ["createTabNavigator"]))
+(defonce BottonTabNavigator (gobj/get ReactNavigation #js ["createBottomTabNavigator"]))
+(defonce TopTabNavigator (gobj/get ReactNavigation #js ["createMaterialTopTabNavigator"]))
+(defonce DrawerNavigator (gobj/get ReactNavigation #js ["createDrawerNavigator"]))
+(defonce SwitchNavigator (gobj/get ReactNavigation #js ["createSwitchNavigator"]))
 
 ;; Routers
 (defonce StackRouter (gobj/get ReactNavigation #js ["StackRouter"]))
