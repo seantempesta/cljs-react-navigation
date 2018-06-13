@@ -73,6 +73,8 @@
 (def tab-screen base/tab-screen)
 (def drawer-component base/drawer-component)
 (def stack-navigator base/stack-navigator)
-(def tab-navigator base/tab-navigator)
+#_(def tab-navigator base/tab-navigator)
+(def botton-tab-navigator base/botton-tab-navigator)
+
 (def drawer-navigator base/drawer-navigator)
 (def switch-navigator base/switch-navigator)

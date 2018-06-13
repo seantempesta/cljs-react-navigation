@@ -55,7 +55,8 @@
 (def tab-screen reagent/tab-screen)
 (def drawer-component reagent/drawer-component)
 (def stack-navigator reagent/stack-navigator)
-(def tab-navigator reagent/tab-navigator)
+#_(def tab-navigator reagent/tab-navigator)
+(def botton-tab-navigator reagent/botton-tab-navigator)
 (def drawer-navigator reagent/drawer-navigator)
 (def switch-navigator reagent/switch-navigator)
 
@@ -79,9 +80,8 @@
       (let [routing-state (or @routing-sub
                               (init-state root-router init-route-name))]
         [:> root-router {:navigation
-                         (base/addNavigationHelpers
-                          (clj->js {:state    routing-state
-                                    :addListener add-listener
-                                    :dispatch (fn [action]
-                                                (let [next-state (getStateForAction action routing-state)]
-                                                  (dispatch [::swap-routing-state next-state])))}))}]))))
+                         (clj->js {:state    routing-state
+                                   :addListener add-listener
+                                   :dispatch (fn [action]
+                                               (let [next-state (getStateForAction action routing-state)]
+                                                 (dispatch [::swap-routing-state next-state])))})}]))))
