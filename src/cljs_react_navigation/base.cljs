@@ -22,7 +22,7 @@
 ;; Navigators
 (defonce createNavigator (gobj/get ReactNavigation #js ["createNavigator"]))
 (defonce StackNavigator (gobj/get ReactNavigation #js ["createStackNavigator"]))
-(defonce TabNavigator (gobj/get ReactNavigation #js ["createTabNavigator"]))
+#_(defonce TabNavigator (gobj/get ReactNavigation #js ["createTabNavigator"]))
 (defonce BottonTabNavigator (gobj/get ReactNavigation #js ["createBottomTabNavigator"]))
 (defonce TopTabNavigator (gobj/get ReactNavigation #js ["createMaterialTopTabNavigator"]))
 (defonce DrawerNavigator (gobj/get ReactNavigation #js ["createDrawerNavigator"]))
@@ -36,7 +36,7 @@
 (defonce Transitioner (gobj/get ReactNavigation #js ["Transitioner"]))
 (defonce CardStack (gobj/get ReactNavigation #js ["CardStack"]))
 (defonce DrawerView (gobj/get ReactNavigation #js ["DrawerView"]))
-(defonce TabView (gobj/get ReactNavigation #js ["TabView"]))
+#_(defonce TabView (gobj/get ReactNavigation #js ["TabView"]))
 
 (assert (and React ReactNavigation) "React and React Navigation must be installed.  Maybe NPM install them and restart the packager?")
 
@@ -314,12 +314,23 @@
       (StackNavigator (clj->js routeConfigs-conformed) (clj->js StackNavigatorConfig-conformed))
       (StackNavigator (clj->js routeConfigs-conformed)))))
 
-(defn tab-navigator [routeConfigs navigationOptions]
+#_(defn tab-navigator [routeConfigs navigationOptions]
   (let [routeConfigs-conformed (s/conform :react-navigation/RouteConfigs routeConfigs)
         navigationOptions-conformed (s/conform :react-navigation/navigationOptions navigationOptions)]
     (assert (not= routeConfigs-conformed :cljs.spec.alpha/invalid))
     (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid))
     (TabNavigator (clj->js routeConfigs-conformed) (clj->js navigationOptions-conformed))))
+
+
+(defn botton-tab-navigator [routeConfigs navigationOptions]
+  ;;;;;;;;;IMHERE
+  (let [routeConfigs-conformed (s/conform :react-navigation/RouteConfigs routeConfigs)
+        navigationOptions-conformed (s/conform :react-navigation/navigationOptions navigationOptions)]
+    (assert (not= routeConfigs-conformed :cljs.spec.alpha/invalid))
+    (assert (not= navigationOptions-conformed :cljs.spec.alpha/invalid))
+    (BottonTabNavigator (clj->js routeConfigs-conformed) (clj->js navigationOptions-conformed))))
+
+
 
 (defn drawer-navigator [routeConfigs drawerNavigatorConfig]
   (let [routeConfigs-conformed (s/conform :react-navigation/RouteConfigs routeConfigs)

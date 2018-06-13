@@ -55,7 +55,8 @@
 (def tab-screen reagent/tab-screen)
 (def drawer-component reagent/drawer-component)
 (def stack-navigator reagent/stack-navigator)
-(def tab-navigator reagent/tab-navigator)
+#_(def tab-navigator reagent/tab-navigator)
+(def botton-tab-navigator reagent/botton-tab-navigator)
 (def drawer-navigator reagent/drawer-navigator)
 (def switch-navigator reagent/switch-navigator)
 
